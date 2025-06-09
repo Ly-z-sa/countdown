@@ -237,7 +237,7 @@ function showNewQuote() {
 
 // Show the first quote immediately and then cycle every 10 seconds
 showNewQuote();
-setInterval(showNewQuote, 10000);
+setInterval(showNewQuote, 30000);
 
 // --- MUSIC CONTROLS ---
 const music = document.getElementById('bg-music');
