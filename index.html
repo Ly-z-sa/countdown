@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BacII-2025 Countdown</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="text-white flex items-center justify-center min-h-screen p-4">
+
+    <audio id="bg-music" src="calming-music.mp3" autoplay loop hidden></audio>
+    
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="main-content text-center w-full max-w-4xl">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
+            <span class="text-cyan-400">BacII-2025</span> Countdown
+        </h1>
+        <p class="text-md md:text-lg text-gray-300 mb-12 md:mb-16">Counting down to August 18, 2025, 07:00 AM</p>
+
+        <div id="countdown" class="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+            <div class="timer-circle">
+                <svg><circle class="bg-circle" cx="50%" cy="50%" r="45%"></circle><circle id="days-circle" class="progress-circle" cx="50%" cy="50%" r="45%"></circle></svg>
+                <div class="timer-content"><span id="days" class="text-3xl md:text-4xl font-bold">00</span><span class="text-xs md:text-sm text-gray-400">Days</span></div>
+            </div>
+            <div class="timer-circle">
+                 <svg><circle class="bg-circle" cx="50%" cy="50%" r="45%"></circle><circle id="hours-circle" class="progress-circle" cx="50%" cy="50%" r="45%"></circle></svg>
+                <div class="timer-content"><span id="hours" class="text-3xl md:text-4xl font-bold">00</span><span class="text-xs md:text-sm text-gray-400">Hours</span></div>
+            </div>
+            <div class="timer-circle">
+                 <svg><circle class="bg-circle" cx="50%" cy="50%" r="45%"></circle><circle id="minutes-circle" class="progress-circle" cx="50%" cy="50%" r="45%"></circle></svg>
+                <div class="timer-content"><span id="minutes" class="text-3xl md:text-4xl font-bold">00</span><span class="text-xs md:text-sm text-gray-400">Minutes</span></div>
+            </div>
+            <div class="timer-circle">
+                 <svg><circle class="bg-circle" cx="50%" cy="50%" r="45%"></circle><circle id="seconds-circle" class="progress-circle" cx="50%" cy="50%" r="45%"></circle></svg>
+                <div class="timer-content"><span id="seconds" class="text-3xl md:text-4xl font-bold">00</span><span class="text-xs md:text-sm text-gray-400">Seconds</span></div>
+            </div>
+        </div>
+        
+        <div class="mt-12 md:mt-16 h-20 flex items-center justify-center">
+            <div id="quote-container" class="max-w-2xl p-4 rounded-lg bg-black/20 backdrop-blur-sm">
+                <p id="quote-text" class="text-gray-300 italic text-sm md:text-base">"Loading inspiration..."</p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a href="http://www.watchisup.com/countdown/exam/bacii-2025-2025-08-18-07-00" title="BacII-2025" target="_blank" class="text-gray-600 hover:text-cyan-400 transition-colors duration-300 text-xs">
+                Made with Love
+            </a>
+        </div>
+    </div>
+
+    <div id="personal-menu-btn" style="position:fixed;top:24px;right:24px;z-index:10010;cursor:pointer;background:rgba(18,24,40,0.95);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:1.7rem;line-height:1;">&#8942;</span>
+    </div>
+    <div id="personal-modal" style="display:none;position:fixed;top:70px;right:24px;z-index:10011;background:rgba(18,24,40,0.98);padding:24px 20px 18px 20px;border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,0.18);min-width:260px;">
+        <div style="margin-bottom:10px;font-weight:600;color:#06b6d4;">Personalize</div>
+        <input id="personal-message-input" type="text" placeholder="Enter your own message here" 
+               class="rounded px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-cyan-400" 
+               style="width:100%;margin-bottom:10px;box-sizing:border-box;">
+        <button id="save-message-btn" class="px-3 py-2 rounded bg-cyan-500 text-white hover:bg-cyan-600 transition" style="width:100%;">Save</button>
+        <div id="personal-message" class="text-lg font-semibold text-cyan-300 mt-3" style="display:none;"></div>
+        <div id="personal-message-display" class="text-lg font-semibold text-cyan-300 mb-4" style="display:none;"></div>
+        <button id="close-personal-modal" style="margin-top:10px;width:100%;background:#232d3b;color:#fff;border:none;padding:6px 0;border-radius:8px;">Close</button>
+    </div>
+
+    <div style="position:fixed;bottom:24px;right:24px;z-index:10002;display:flex;align-items:center;gap:16px;">
+        <div id="music-switcher" style="background:rgba(18,24,40,0.95);color:#fff;padding:8px 16px;border-radius:16px;font-size:0.95rem;box-shadow:0 2px 8px rgba(0,0,0,0.15);display:flex;align-items:center;gap:10px;">
+            <button id="music-prev" style="background:none;border:none;color:#06b6d4;font-size:1.3rem;cursor:pointer;">&#8592;</button>
+            <span id="music-track-name" style="min-width:80px;display:inline-block;text-align:center;">Calming</span>
+            <button id="music-next" style="background:none;border:none;color:#06b6d4;font-size:1.3rem;cursor:pointer;">&#8594;</button>
+        </div>
+        <button id="music-control-btn" aria-label="Toggle music"
+                style="background:#06b6d4;border:none;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.2);cursor:pointer;">
+            <span id="music-icon" style="font-size:1.6rem;">&#9658;</span>
+        </button>
+    </div>
+    <div id="music-hint" style="position:fixed;bottom:90px;right:24px;z-index:10001;background:rgba(18,24,40,0.95);color:#fff;padding:8px 16px;border-radius:16px;font-size:0.95rem;box-shadow:0 2px 8px rgba(0,0,0,0.15);opacity:0;pointer-events:none;transition:opacity 0.4s;">
+        Play calming music
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
