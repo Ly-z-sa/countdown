@@ -1,0 +1,84 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121828; /* Fallback background */
+    overflow: hidden; /* Hide scrollbars caused by canvas */
+}
+
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(-45deg, #121828, #182848, #232d3b, #232323);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Main content container */
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
+.timer-circle {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+@media (max-width: 640px) {
+    .timer-circle {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+.timer-circle svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.timer-circle circle {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+}
+
+.timer-circle .bg-circle {
+    stroke: rgba(255, 255, 255, 0.1);
+}
+
+.timer-circle .progress-circle {
+    stroke: #06b6d4; /* cyan-500 */
+    transition: stroke-dashoffset 0.5s linear;
+}
+
+.timer-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px);
+    border-radius: 50%;
+}
+
+#quote-text {
+    transition: opacity 0.5s ease-in-out;
+}
