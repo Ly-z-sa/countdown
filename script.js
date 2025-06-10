@@ -331,7 +331,8 @@ saveBtn.onclick = () => {
 const tracks = [
     { name: "Calming", file: "calming-music.mp3" },
     { name: "Focus", file: "focus-music.mp3" },
-    { name: "Nature", file: "nature-music.mp3" }
+    { name: "Nature", file: "nature-music.mp3" },
+    { name: "scary", file: "bacII.mp3"}
 ];
 let currentTrack = 0;
 
